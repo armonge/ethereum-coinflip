@@ -1,64 +1,59 @@
 (function() {
   // jquery elements
-  var $bankBalance;
   var $coinBalance;
   var $coinFlips;
   var $flipForm;
   var $bet;
-  var $withdrawForm;
-  var $withdrawAmount;
-  var $mintForm;
-  var $mintAmount;
   var $loader;
+  var $results;
 
   // account status
   var balance;
-  var bankBalance;
   var coinFlips;
+  var lastResult;
+  var lastSelection;
 
   // eth account
   var account = web3.eth.accounts[0];
 
   $(function() {
-    $bankBalance = $('#bank-coin-balance');
+    $result = $('#results');
     $coinBalance = $('#coin-balance');
     $coinFlips = $('#coin-flips');
-    $loader = $('.loader');
-    updateTable();
-
     $flipForm = $('#flip-form');
+    $loader = $('.loader');
     $bet = $('#bet');
 
-    $mintForm = $('#mint-form');
-    $mintAmount = $('#mint-amount');
-
-    $withdrawForm = $('#withdraw-form');
-    $withdrawAmount = $('#withdraw-amount');
-
-    $withdrawForm.on('submit', withdraw);
     $flipForm.on('submit', flipCoin);
-    $mintForm.on('submit', mint);
-  });
 
-  CusucoCoinFlip.Sent().watch(updateTable);
-  CusucoCoinFlip.Received().watch(updateTable);
-  CusucoCoinFlip.Minted().watch(updateTable);
+    updateTable();
+  });
 
   function formatNumber(number) {
     return number.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').toString();
   }
 
-  function updateTable() {
+  CusucoCoinFlip.allEvents().watch(updateTable);
+
+  function updateTable(err, result) {
+    console.log(err, result);
     balance = CusucoCoinFlip.balances(account).toNumber();
     $coinBalance.text(formatNumber(balance));
-
-    bankBalance = CusucoCoinFlip.bankBalance().toNumber();
-    $bankBalance.text(formatNumber(bankBalance));
 
     coinFlips = CusucoCoinFlip.flips().toString();
     $coinFlips.text(coinFlips);
 
+    lastResult = CusucoCoinFlip.lastResult();
+    lastSelection = CusucoCoinFlip.lastSelection();
+    $result.text('Result: {result}, Selection: {selection}'
+                     .replace('{selection}', formatResult(lastSelection))
+                     .replace('{result}', formatResult(lastResult)));
+
     enableForms();
+  }
+
+  function formatResult(result){
+     return result ? 'Heads' : 'Tails';
   }
 
   function flipCoin(e) {
@@ -66,39 +61,11 @@
     var selection = $('input:checked', $flipForm).val() === 'head';
     var bet = parseInt($bet.val(), 10);
 
-    if (balance < bet) {
-      return alert('Can\'t bet coins you don\'t have!');
-    }
-
-    if (bankBalance < bet) {
-      return alert('Sorry, we don\'t have as much money as you');
-    }
-
-    console.log(CusucoCoinFlip.flip(selection, bet));
     disableForms();
+    CusucoCoinFlip.flip(selection, bet);
   }
 
-  function mint(e) {
-    e.preventDefault();
-    var amount = parseInt($mintAmount.val(), 10);
-
-    CusucoCoinFlip.mint(amount);
-    disableForms();
-  }
-
-  function withdraw(e) {
-    e.preventDefault();
-    var amount = parseInt($withdrawAmount.val(), 10);
-
-    if (bankBalance < amount) {
-      return alert('Money has no coins, better mint some!');
-    }
-
-    CusucoCoinFlip.send(account, amount);
-    disableForms();
-  }
-
-  function enableForms(error, result) {
+  function enableForms() {
     $(':input, button').removeAttr('disabled');
     $loader.removeClass('active');
   }

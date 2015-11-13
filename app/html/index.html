@@ -61,39 +61,20 @@
           </form>
         </div>
 
-        <div class="col-md-4">
-          <h2>Withdraw from bank</h2>
-          <form id="withdraw-form">
-            <div class="form-group">
-              <label>Amount</label>
-              <input type="number" id="withdraw-amount" min="1" step="1" required>
-            </div>
-            <div class="form-group"><button class="btn">Withdraw</button></div>
-          </form>
-
-          <h2>Mint</h2>
-          <form id="mint-form">
-            <div class="form-group">
-              <label>Amount</label>
-              <input type="number" id="mint-amount" min="1" step="1" required>
-            </div>
-            <div class="form-group"><button class="btn">Mint</button></div>
-          </form>
-        </div>
 
         <div class="col-md-4">
           <table class="table table-bordered">
-            <tr>
-              <th>Bank Balance</th>
-              <td><img width='16' src="http://fc.cusu.co/img/cusuco.jpg" > <span id="bank-coin-balance"></span></td>
-            </tr>
             <tr>
               <th>Your Balance</th>
               <td><img width='16' src="http://fc.cusu.co/img/cusuco.jpg" > <span id="coin-balance"></span></td>
             </tr>
             <tr>
               <th>Coin Flips</th>
-              <td id=coin-flips></td>
+              <td id="coin-flips"></td>
+            </tr>
+            <tr>
+              <th>Results</th>
+              <td id="results"></td>
             </tr>
           </table>
         </div>
