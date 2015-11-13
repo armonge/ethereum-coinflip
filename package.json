@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "homepage": "",
-  "devDependencies": {
+  "dependencies": {
     "embark-framework": "^1.0.2",
     "grunt-embark": "^0.5.1",
     "grunt-contrib-clean": "^0.6.0",

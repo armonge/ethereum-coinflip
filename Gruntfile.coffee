@@ -14,6 +14,13 @@ module.exports = (grunt) ->
           "app/js/**/*.js"
         ]
 
+      img: 
+        src: [
+          "app/img/**/*.png"
+          "app/img/**/*.svg"
+        ]
+        cwd: "app/img/"
+
       css:
         src: [
           "app/css/**/*.css"
@@ -89,6 +96,11 @@ module.exports = (grunt) ->
       css:
         files:
           "dist/dapp/css/app.min.css" : "<%= files.css.src %>"
+
+      img:
+        files:
+          "generated/dapp/" : "<%= files.img.src %>"
+
       contracts:
         files:
           "dist/contracts/": '<%= files.contracts.src %>'
