@@ -1,0 +1,26 @@
+{
+  "id": "embark-coinflip-blockchain",
+  "cmd": "./entryfile.sh embark blockchain",
+  "cpus": 1,
+  "mem": 2048,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "network": "BRIDGE",
+      "image": "armonge/embark-coinflip:latest",
+      "forcePullImage": true,
+      "portMappings": [
+        {"containerPort": 8101, "servicePort": 8101}
+      ],
+      "parameters": [
+        {"key": "env", "value": "RPC_HOST=0.0.0.0"}
+      ]
+    },
+    "volumes": [{
+        "containerPath": "/tmp/embark",
+        "hostPath": "/var/embark",
+        "mode": "RW" 
+    }]
+  }
+}

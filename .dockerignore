@@ -1,0 +1,5 @@
+.git
+dist
+generated
+node_modules
+.node-xmlhttprequest*

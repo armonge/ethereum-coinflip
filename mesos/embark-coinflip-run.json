@@ -1,0 +1,22 @@
+{
+  "id": "embark-coinflip-run",
+  "cmd": "./entryfile.sh embark run",
+  "cpus": 1,
+  "mem": 2048,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "network": "BRIDGE",
+      "image": "armonge/embark-coinflip:latest",
+      "forcePullImage": true,
+      "portMappings": [
+        {"containerPort": 8000, "servicePort": 8000}
+      ],
+      "parameters": [
+        {"key": "env", "value": "RPC_HOST=mesos.armonge.info"},
+        {"key": "env", "value": "RPC_PORT_DOMAIN=_embark-coinflip-blockchain._tcp.marathon.mesos"}
+      ]
+    }
+  }
+}

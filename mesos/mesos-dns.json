@@ -1,0 +1,6 @@
+{
+  "cmd": "/root/mesos-dns/mesos-dns-v0.4.0-linux-amd64 -config=/root/mesos-dns/config.json",
+  "cpus": 1.0, 
+  "id": "mesos-dns",
+  "instances": 1
+}
