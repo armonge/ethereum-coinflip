@@ -21,6 +21,10 @@
         "containerPath": "/tmp/embark",
         "hostPath": "/var/embark",
         "mode": "RW" 
+    }, {
+        "containerPath": "/root/.ethash/",
+        "hostPath": "/var/ethash",
+        "mode": "RW" 
     }]
   }
 }
